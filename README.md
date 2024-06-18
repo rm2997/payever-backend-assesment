@@ -1,8 +1,4 @@
-# backend-assesment
-2. Complete the Tasks
-Please read through everything and follow the steps. We cannot help you technically as it’s required to solely finish the task without external help to make it equally fair for every participant.
-
-
+#backend-assesment
 BACKEND ENGINEERING TASK
 
 ESTIMATED TIME: 240 MINUTES (you are allowed to take more time)
