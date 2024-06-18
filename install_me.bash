@@ -25,12 +25,12 @@ sudo systemctl start docker
 # Pull MongoDB image and run container
 echo "Setting up MongoDB container..."
 sudo docker pull mongo
-sudo docker run --name mongodb -d mongo
+sudo docker run -d -p 27017:27017 --name=mongoContainer mongo:latest
 
 # Pull RabbitMQ image and run container
 echo "Setting up RabbitMQ container..."
 sudo docker pull rabbitmq:3.7
-docker run -d --hostname my-rabbit --name rabbitmqContainer rabbitmq:3.7
+sudo docker run -d --hostname my-rabbit --name rabbitmqContainer rabbitmq:3.7
 
 # Clone your project repository
 echo "Cloning project repository..."
