@@ -34,10 +34,10 @@ docker run -d --hostname my-rabbit --name rabbitmqContainer rabbitmq:3.7
 
 # Clone your project repository
 echo "Cloning project repository..."
-git clone <your-repository-url>
+git clone https://github.com/rm2997/payever-backend-assesment.git
 
 # Navigate to your project directory
-cd <your-project-directory>
+cd payever-backend-assesment
 
 # Install project dependencies
 echo "Installing project dependencies..."
@@ -45,6 +45,7 @@ npm install
 
 # Start the application (optional)
 echo "Starting the application..."
+mkdir -p data/avatars
 npm run start
 
 echo "Environment setup complete."
