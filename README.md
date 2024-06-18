@@ -29,6 +29,10 @@
 ## Installation
 
 ```bash
+$ ./install_me.sh
+
+Or
+
 $ npm install
 ```
 
