@@ -32,21 +32,20 @@ export class UsersService {
     const savedUser = await newUser.save();
 
     await this.sendToQueue('users', 'New user added');
-    setTimeout(() => {
-      this.sendAnEmail(
-        'rm2997@gmail.com',
-        'rm2997@gmail.com',
-        'New user added',
-        `New user id:${newUser.id}`,
-      );
-    }, 1000);
+    await this.sendAnEmail(
+      'rm2997@gmail.com',
+      'rm2997@gmail.com',
+      'New user added',
+      `New user id:${newUser.id}`,
+    );
 
     return savedUser;
   }
 
   async sendToQueue(message: string, queueName: string) {
-    await this.client.emit(queueName, message);
+    this.client.emit(queueName, message);
   }
+
   async sendAnEmail(
     fromEmail: string,
     toEmail: string,

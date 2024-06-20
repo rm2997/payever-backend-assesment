@@ -20,12 +20,15 @@ export class UsersController {
 
   @Post()
   @UseInterceptors(FileInterceptor('avatar'))
-  create(@Body() createUserDto: CreateUserDto, @UploadedFile() file: any) {
-    return this.usersService.create(createUserDto, file.buffer);
+  async create(
+    @Body() createUserDto: CreateUserDto,
+    @UploadedFile() avatar: Express.Multer.File,
+  ) {
+    return await this.usersService.create(createUserDto, avatar.buffer);
   }
 
   @Get()
-  findAll() {
+  async findAll() {
     return this.usersService.findAll();
   }
 
