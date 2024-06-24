@@ -1,6 +1,10 @@
+import { userStub } from '../tests/stubs/user.stub';
+
 export const usersModelMock = {
-  save: jest.fn(),
-  find: jest.fn(),
-  findById: jest.fn(),
-  findByIdAndDelete: jest.fn(),
+  save: jest.fn().mockReturnValue(userStub()),
+  find: jest.fn().mockReturnValue([userStub()]),
+  findById: jest.fn().mockImplementation(() => ({
+    exec: jest.fn(),
+  })),
+  findByIdAndDelete: jest.fn().mockResolvedValue(userStub()),
 };

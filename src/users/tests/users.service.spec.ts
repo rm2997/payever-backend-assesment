@@ -11,7 +11,7 @@ import {
   clientProxyMock,
   mailerServiceMock,
 } from '../__mocks__';
-import { CreateUserDto } from '../dto/create-user.dto';
+import { exec } from 'child_process';
 
 describe('UserService', () => {
   let userService: UsersService;
@@ -59,10 +59,16 @@ describe('UserService', () => {
       // } as Express.Multer.File;
 
       //const userDto: CreateUserDto = { ...userStub() };
+      jest.spyOn(model, 'findById').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(userStub()),
+      } as any);
 
-      usersModelMock.findById.mockResolvedValue(userStub().userId);
-      const result = await userService.findOne(userStub().userId);
-      expect(result).toEqual(userStub());
+      // usersModelMock.findById(exec).mockResolvedValue(userStub().id);
+      const result = await userService.findOne(userStub().id);
+      let expectUser = userStub();
+      expectUser.avatar = `data/avatars/${userStub().id}.jpg`;
+
+      expect(result).toEqual(expectUser);
     });
   });
 
