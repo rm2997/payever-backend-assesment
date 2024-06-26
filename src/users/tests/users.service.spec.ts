@@ -11,7 +11,8 @@ import {
   clientProxyMock,
   mailerServiceMock,
 } from '../__mocks__';
-import { exec } from 'child_process';
+
+import { bcrypt, rabbitMQ } from '../../utils';
 
 describe('UserService', () => {
   let userService: UsersService;
@@ -51,14 +52,9 @@ describe('UserService', () => {
     expect(clientProxy).toBeDefined();
   });
 
+  // find one user by id
   describe('findOne', () => {
     it('should find a user', async () => {
-      // const avatar = {
-      //   originalname: 'avatar.png',
-      //   buffer: Buffer.from('avatar data'),
-      // } as Express.Multer.File;
-
-      //const userDto: CreateUserDto = { ...userStub() };
       jest.spyOn(model, 'findById').mockReturnValue({
         exec: jest.fn().mockResolvedValue(userStub()),
       } as any);
@@ -68,6 +64,48 @@ describe('UserService', () => {
       let expectUser = userStub();
       expectUser.avatar = `data/avatars/${userStub().id}.jpg`;
 
+      expect(result).toEqual(expectUser);
+    });
+  });
+
+  // find all users
+  describe('findALl', () => {
+    it('should find all users', async () => {
+      jest.spyOn(model, 'find').mockReturnValue({
+        exec: jest.fn().mockResolvedValue([userStub()]),
+      } as any);
+
+      const result = await userService.findAll();
+      expect(result).toEqual([userStub()]);
+    });
+  });
+
+  // create new user
+  describe('create', () => {
+    it('should create a user', async () => {
+      jest.spyOn(model, 'find').mockReturnValue({
+        exec: jest.fn().mockResolvedValue([userStub()]),
+      } as any);
+
+      const result = await userService.findAll();
+      expect(result).toEqual([userStub()]);
+    });
+  });
+
+  // remove a user
+  describe('remove', () => {
+    it('should remove a user', async () => {
+      jest.spyOn(model, 'find').mockReturnValue({
+        exec: jest.fn().mockResolvedValue([userStub()]),
+      } as any);
+
+      jest.spyOn(model, 'findByIdAndDelete').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(userStub()),
+      } as any);
+
+      const result = await userService.remove(userStub().id);
+      let expectUser = userStub();
+      expectUser.avatar = `data/avatars/${userStub().id}.jpg`;
       expect(result).toEqual(expectUser);
     });
   });

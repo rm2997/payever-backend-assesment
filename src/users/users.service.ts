@@ -50,7 +50,7 @@ export class UsersService {
   }
 
   async findAll(): Promise<User[]> {
-    return await this.userModel.find();
+    return await this.userModel.find().exec();
   }
 
   async findOne(id: string): Promise<User> {
@@ -67,7 +67,7 @@ export class UsersService {
   }
 
   async showAvatar(id: string) {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).exec();
     //return user.avatar;
     return {
       imageAddress: `data/avatars/${id}.jpg`,
@@ -80,7 +80,7 @@ export class UsersService {
   }
 
   async remove(id: string): Promise<User> {
-    const user = await this.userModel.findById(id);
+    const user = await this.userModel.findById(id).exec();
     if (!user) throw new NotFoundException('No user found');
     await this.userModel.findByIdAndDelete(id);
     imageUtils.deleteImage(id);

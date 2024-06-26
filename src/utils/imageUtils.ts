@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import * as fs from 'fs';
 
 export function saveImage(userId: string, imageB64: string) {
@@ -10,8 +11,9 @@ export function deleteImage(userId: string) {
   const userAvatarFile = `data/avatars/${userId}.jpg`;
   fs.unlink(userAvatarFile, (err) => {
     if (err) {
-      console.error(err);
-      return err;
+      throw new NotFoundException(
+        `Can't find user image to delete, userid:${userId},`,
+      );
     }
   });
 }
